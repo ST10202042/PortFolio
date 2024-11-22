@@ -22,7 +22,7 @@ namespace PortFolio.Controllers
             if (ModelState.IsValid)
             {
                 // Handle the claim submission (save to in-memory data or database)
-                // Example: Save the claim
+               
                 return RedirectToAction("View");
             }
             return View(claim); // If validation fails, return to the form

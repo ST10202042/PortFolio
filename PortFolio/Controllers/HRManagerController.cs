@@ -16,7 +16,6 @@ namespace PortFolio.Controllers
         }
         public IActionResult Payment()
         {
-            // Replace with actual data fetching logic
             var claims = new List<Claim>
     {
         new Claim

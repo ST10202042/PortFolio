@@ -55,10 +55,10 @@ namespace Portfolio.Controllers
                 return View();
             }
 
-            // Store the user's role (you could also use Claims or Cookies for better security)
+           
             TempData["UserRole"] = user.Role;
 
-            // Redirect to the unified dashboard based on the user's role
+           
             switch (user.Role)
             {
                 case "Lecturer":
