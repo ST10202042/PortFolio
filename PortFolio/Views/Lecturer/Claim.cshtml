@@ -1,0 +1,86 @@
+﻿@model PortFolio.Models.Claim
+
+@{
+    ViewData["Title"] = "Claim";
+}
+
+<div class="container py-5">
+    <form asp-action="Claim" method="post" enctype="multipart/form-data">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h3>Personal Details</h3>
+            </div>
+            <div class="card-body">
+                <div class="form-group">
+                    <label asp-for="LecturerName"></label>
+                    <input asp-for="LecturerName" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="Department"></label>
+                    <input asp-for="Department" class="form-control" />
+                </div>
+            </div>
+        </div>
+
+        <div class="card mb-4">
+            <div class="card-header">
+                <h3>Module Details</h3>
+            </div>
+            <div class="card-body">
+                <div id="modulesContainer">
+                    <div class="module-entry">
+                        <div class="form-group">
+                            <label>Module Code</label>
+                            <input name="Modules[0].ModuleCode" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label>Module Name</label>
+                            <input name="Modules[0].ModuleName" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label>Claim Type</label>
+                            <select name="Modules[0].ClaimType" class="form-control">
+                                <option value="">Select</option>
+                                <option value="CATCH UP">CATCH UP</option>
+                                <option value="OVERTIME">OVERTIME</option>
+                                <option value="General Claim">General Claim</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Rate Per Hour</label>
+                            <input name="Modules[0].RatePerHour" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label>Description</label>
+                            <textarea name="Modules[0].Description" class="form-control" rows="3"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <button type="button" id="addModule" class="btn btn-secondary">Add Module</button>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Supporting Documents</label>
+            <input type="file" name="SupportingDocuments" class="form-control" />
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit Claim</button>
+    </form>
+</div>
+
+<script>
+    $(document).ready(function () {
+        var moduleTemplate = $('.module-entry').first().clone();
+
+        $('#addModule').on('click', function () {
+            var moduleCount = $('.module-entry').length;
+            var newModule = moduleTemplate.clone();
+            newModule.find('input, select').each(function () {
+                var nameAttr = $(this).attr('name').replace('[0]', `[${moduleCount}]`);
+                $(this).attr('name', nameAttr).val('');
+            });
+            $('#modulesContainer').append(newModule);
+        });
+    });
+</script>

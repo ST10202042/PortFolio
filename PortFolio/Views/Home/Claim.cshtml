@@ -1,0 +1,66 @@
+﻿@{
+    Layout = "_Layout";
+}
+
+<h2>Make a Claim</h2>
+<form method="post" action="/Lecturer/MakeClaim">
+    <div>
+        <label for="module">Module:</label>
+        <input type="text" name="module" id="module" required />
+    </div>
+    <div>
+        <label for="hours">Hours Worked:</label>
+        <input type="number" name="hours" id="hours" required />
+    </div>
+    <div>
+        <label for="rate">Rate Per Hour:</label>
+        <input type="number" name="rate" id="rate" required />
+    </div>
+    <div>
+        <button type="submit" class="btn">Submit Claim</button>
+    </div>
+</form>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: black;
+        color: gold;
+        margin: 0;
+        padding: 0;
+    }
+    h2 {
+        text-align: center;
+        color: gold;
+    }
+    form {
+        margin: 0 auto;
+        width: 300px;
+        padding: 20px;
+        border: 2px solid gold;
+        border-radius: 10px;
+    }
+    label {
+        font-weight: bold;
+    }
+    input[type="text"], input[type="number"] {
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0;
+        background-color: black;
+        border: 1px solid gold;
+        color: gold;
+    }
+    .btn {
+        background-color: gold;
+        color: black;
+        border: none;
+        padding: 10px 20px;
+        cursor: pointer;
+        width: 100%;
+    }
+    .btn:hover {
+        background-color: black;
+        color: gold;
+    }
+</style>

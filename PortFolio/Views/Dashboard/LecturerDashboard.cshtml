@@ -1,0 +1,28 @@
+﻿@{
+    ViewData["Title"] = "Lecturer Dashboard";
+}
+
+<div class="container py-5">
+    <h2>Welcome, Lecturer</h2>
+    <p>Select an action below:</p>
+    <ul>
+        <li>
+            <!-- Claim Button -->
+            <button class="btn btn-primary navigation-btn" data-url="/Lecturer/Claim">Claim</button>
+        </li>
+        <li>
+            <!-- View Button -->
+            <button class="btn btn-secondary navigation-btn" data-url="/Lecturer/View">View</button>
+        </li>
+    </ul>
+</div>
+
+<script>
+    // Add event listener to all buttons with 'navigation-btn' class
+    document.querySelectorAll('.navigation-btn').forEach(button => {
+        button.addEventListener('click', function () {
+            const url = this.getAttribute('data-url');
+            window.location.href = url; // Navigate to the specified URL
+        });
+    });
+</script>

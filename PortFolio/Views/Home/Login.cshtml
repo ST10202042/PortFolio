@@ -1,0 +1,89 @@
+﻿@{
+    ViewData["Title"] = "Login";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #000;
+            color: #FFD700;
+        }
+
+        .form-container {
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #333;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container form-container">
+        <h2 class="text-center">Login</h2>
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" class="form-control" id="email" placeholder="Enter email" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" id="password" placeholder="Enter password" required>
+            </div>
+            <div class="form-group">
+                <label for="role">Role</label>
+                <select id="role" class="form-control" required>
+                    <option value="lecturer">Lecturer</option>
+                    <option value="manager">Manager</option>
+                    <option value="hrManager">HR Manager</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Login</button>
+        </form>
+        <div class="text-center mt-3">
+            <a href="/Register">Don’t have an account? Register</a>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById("loginForm").addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            const email = document.getElementById("email").value.trim();
+            const password = document.getElementById("password").value.trim();
+            const role = document.getElementById("role").value;
+
+            const users = JSON.parse(localStorage.getItem("users") || "[]");
+
+            // Authenticate the user
+            const user = users.find(user =>
+                user.email.trim() === email &&
+                user.password.trim() === password
+            );
+
+            if (user) {
+                alert("Login successful!");
+
+                // Now check the role using if-else or switch for redirection
+                if (role === "lecturer") {
+                    window.location.href = "/Dashboard/LecturerDashboard";
+                } else if (role === "manager") {
+                    window.location.href = "/Dashboard/ManagerDashboard";
+                } else if (role === "hrManager") {
+                    window.location.href = "/Dashboard/HRManagerDashboard";
+                } else {
+                    alert("Role not recognized!");  // Optional: In case something goes wrong
+                }
+            } else {
+                alert("Invalid credentials! Please try again.");
+            }
+        });
+    </script>
+</body>
+</html>

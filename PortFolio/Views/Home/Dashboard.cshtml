@@ -1,0 +1,47 @@
+﻿@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<h2>Welcome to Your Dashboard!</h2>
+
+<div id="dashboardContent">
+    <!-- Dynamic content based on role will be injected here -->
+</div>
+
+<script>
+    // Retrieve the user's role from localStorage
+    const userRole = localStorage.getItem("userRole");
+
+    // Determine which content to show based on role
+    const dashboardContent = document.getElementById("dashboardContent");
+
+    if (userRole === "Lecturer") {
+        dashboardContent.innerHTML = `
+            <div>
+                <h3>Lecturer's Dashboard</h3>
+                <p>Here are your courses, assignments, and lecture details.</p>
+            </div>
+        `;
+    } else if (userRole === "Manager") {
+        dashboardContent.innerHTML = `
+            <div>
+                <h3>Manager's Dashboard</h3>
+                <p>Here are the claims to approve, and the reports to manage.</p>
+            </div>
+        `;
+    } else if (userRole === "HRManager") {
+        dashboardContent.innerHTML = `
+            <div>
+                <h3>HR Manager's Dashboard</h3>
+                <p>Here are the claims for payment, and HR reports.</p>
+            </div>
+        `;
+    } else {
+        dashboardContent.innerHTML = `
+            <div>
+                <h3>Default Dashboard</h3>
+                <p>Welcome to the platform. Please check your details.</p>
+            </div>
+        `;
+    }
+</script>
