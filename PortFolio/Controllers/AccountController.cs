@@ -31,10 +31,10 @@ namespace PortFolio.Controllers
             return Json(new { role = user.Role });
         }
 
-        // Sample method to simulate user authentication (replace with actual logic)
+        
         private User AuthenticateUser(string email, string password)
         {
-            // Simulate user data (replace with actual authentication logic)
+           
             if (email == "test@domain.com" && password == "password") // Dummy check
             {
                 return new User

@@ -19,21 +19,21 @@ namespace PortFolio.Controllers
         }
         public IActionResult LecturerDashboard()
         {
-            // Optionally, you can use TempData to display personalized info
+           
             var role = TempData["UserRole"];
             return View();
         }
 
         public IActionResult ManagerDashboard()
         {
-            // Optionally, you can use TempData to display personalized info
+          
             var role = TempData["UserRole"];
             return View();
         }
 
         public IActionResult HRManagerDashboard()
         {
-            // Optionally, you can use TempData to display personalized info
+           
             var role = TempData["UserRole"];
             return View();
         }
