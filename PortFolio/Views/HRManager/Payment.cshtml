@@ -4,6 +4,53 @@
     ViewData["Title"] = "Process Payments";
 }
 
+<style>
+    body {
+        background-color: black;
+        color: gold;
+    }
+
+    .table {
+        background-color: #333;
+        color: gold;
+    }
+
+    .table th, .table td {
+        border: 1px solid gold;
+    }
+
+    .btn {
+        background-color: black;
+        color: gold;
+        border: 1px solid gold;
+        font-weight: bold;
+        padding: 10px 20px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .btn:hover {
+        background-color: #333;
+        color: gold;
+    }
+
+    .container {
+        margin-top: 50px;
+    }
+
+    h2 {
+        color: gold;
+    }
+
+    .table td a {
+        color: gold;
+    }
+
+    .table td a:hover {
+        color: #e6b800;
+    }
+</style>
+
 <div class="container py-5">
     <h2 class="mb-4">Pending Payments</h2>
     <table class="table table-dark table-bordered">
@@ -21,7 +68,7 @@
                     <td>@claim.ClaimNumber</td>
                     <td>@claim.Modules.Sum(m => m.ClaimAmount)</td>
                     <td>
-                        <a asp-action="Pay" asp-route-id="@claim.Id" class="btn btn-success">Pay</a>
+                        <a asp-action="Pay" asp-route-id="@claim.Id" class="btn btn-success">Process Payment</a>
                     </td>
                 </tr>
             }

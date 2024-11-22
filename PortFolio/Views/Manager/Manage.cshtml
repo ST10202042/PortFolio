@@ -4,6 +4,53 @@
     ViewData["Title"] = "Manage Claims";
 }
 
+<style>
+    body {
+        background-color: black;
+        color: gold;
+    }
+
+    .table {
+        background-color: #333;
+        color: gold;
+    }
+
+    .table th, .table td {
+        border: 1px solid gold;
+    }
+
+    .btn {
+        background-color: black;
+        color: gold;
+        border: 1px solid gold;
+        font-weight: bold;
+        padding: 10px 20px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .btn:hover {
+        background-color: #333;
+        color: gold;
+    }
+
+    .container {
+        margin-top: 50px;
+    }
+
+    h2 {
+        color: gold;
+    }
+
+    .table td a {
+        color: gold;
+    }
+
+    .table td a:hover {
+        color: #e6b800;
+    }
+</style>
+
 <div class="container py-5">
     <h2 class="mb-4">Manage Claims</h2>
     <table class="table table-dark table-bordered">
@@ -23,11 +70,47 @@
                     <td>@claim.LecturerName</td>
                     <td>@claim.Status</td>
                     <td>
+                        <!-- Approve button -->
                         <a asp-action="Approve" asp-route-id="@claim.Id" class="btn btn-success">Approve</a>
+                        <!-- Decline button -->
                         <a asp-action="Decline" asp-route-id="@claim.Id" class="btn btn-danger">Decline</a>
                     </td>
                 </tr>
             }
         </tbody>
     </table>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Retrieve claim data from local storage
+            const claimData = JSON.parse(localStorage.getItem('claimData'));
+
+            if (claimData) {
+                const tableBody = document.querySelector('tbody');
+
+                claimData.modules.forEach((module, index) => {
+                    const row = document.createElement('tr');
+
+                    row.innerHTML = `
+                            <td>${index + 1}</td>
+                            <td>${claimData.lecturerName}</td>
+                            <td>${module.moduleName}</td>
+                            <td>${module.claimType}</td>
+                            <td>
+                                <button class="btn btn-success">Approve</button>
+                                <button class="btn btn-danger">Decline</button>
+                            </td>
+                        `;
+
+                    tableBody.appendChild(row);
+                });
+
+                // Optionally clear local storage
+                // localStorage.removeItem('claimData');
+            } else {
+                alert('No claim data found!');
+            }
+        });
+    </script>
+
 </div>
+

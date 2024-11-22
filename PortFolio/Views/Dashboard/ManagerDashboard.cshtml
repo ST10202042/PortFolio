@@ -1,41 +1,62 @@
-﻿@model IEnumerable<PortFolio.Models.Claim>
-
-@{
-    ViewData["Title"] = "Manage Claims";
+﻿@{
+    ViewData["Title"] = "Manager Dashboard";
 }
 
+<style>
+    body {
+        background-color: black;
+        color: gold;
+    }
+
+    .btn-primary {
+        background-color: gold;
+        color: black;
+        border: 1px solid gold;
+    }
+
+        .btn-primary:hover {
+            background-color: #e6b800;
+        }
+
+    .container {
+        margin-top: 50px;
+    }
+
+    h2, p {
+        color: gold;
+    }
+
+    .btn {
+        background-color: black;
+        color: gold;
+        border: 1px solid gold;
+        font-weight: bold;
+        padding: 10px 20px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+        .btn:hover {
+            background-color: #333;
+            color: gold;
+        }
+
+    ul {
+        list-style-type: none;
+    }
+
+    li {
+        margin-bottom: 15px;
+    }
+</style>
+
 <div class="container py-5">
-    <h2 class="mb-4">Manage Claims</h2>
-    <table class="table table-dark table-bordered">
-        <thead>
-            <tr>
-                <th>Claim Number</th>
-                <th>Lecturer</th>
-                <th>Status</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var claim in Model)
-            {
-                <tr>
-                    <td>@claim.ClaimNumber</td>
-                    <td>@claim.LecturerName</td>
-                    <td>@claim.Status</td>
-                    <td>
-                        <!-- Approve Button -->
-                        <form method="post" asp-action="Approve" asp-route-id="@claim.Id" style="display:inline;">
-                            <button type="submit" class="btn btn-success">Approve</button>
-                        </form>
-
-                        <!-- Decline Button -->
-                        <form method="post" asp-action="Decline" asp-route-id="@claim.Id" style="display:inline;">
-                            <button type="submit" class="btn btn-danger">Decline</button>
-                        </form>
-                    </td>
-                </tr>
-            }
-
-        </tbody>
-    </table>
+    <h2>Welcome,  Manager</h2>
+    <p>Select an action below:</p>
+    <ul>
+        <li>
+            <!-- The link will now open the 'Manage' action in 'Manager' controller -->
+            <a href="@Url.Action("Manage", "Manager")" class="btn btn-primary">Manage Claims</a>
+        </li>
+    </ul>
 </div>

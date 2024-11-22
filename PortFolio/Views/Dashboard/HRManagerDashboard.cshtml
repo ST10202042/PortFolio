@@ -2,6 +2,54 @@
     ViewData["Title"] = "HR Manager Dashboard";
 }
 
+<style>
+    body {
+        background-color: black;
+        color: gold;
+    }
+
+    .btn-primary {
+        background-color: gold;
+        color: black;
+        border: 1px solid gold;
+    }
+
+    .btn-primary:hover {
+        background-color: #e6b800;
+    }
+
+    .container {
+        margin-top: 50px;
+    }
+
+    h2, p {
+        color: gold;
+    }
+
+    .btn {
+        background-color: black;
+        color: gold;
+        border: 1px solid gold;
+        font-weight: bold;
+        padding: 10px 20px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .btn:hover {
+        background-color: #333;
+        color: gold;
+    }
+
+    ul {
+        list-style-type: none;
+    }
+
+    li {
+        margin-bottom: 15px;
+    }
+</style>
+
 <div class="container py-5">
     <h2>Welcome, HR Manager</h2>
     <p>Select an action below:</p>
@@ -9,6 +57,11 @@
         <li>
             <a href="@Url.Action("Manage", "HRManager")" class="btn btn-primary">Manage Claims</a>
         </li>
-        <!-- Add more actions here as needed -->
+        <li>
+            <button class="btn navigation-btn" onclick="location.href='/HRManager/Payment'">Process Payments</button>
+
+        </li>
+     
+       
     </ul>
 </div>

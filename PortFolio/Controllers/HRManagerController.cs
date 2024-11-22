@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using PortFolio.Models;
 
 namespace PortFolio.Controllers
 {
@@ -9,9 +10,30 @@ namespace PortFolio.Controllers
             return View(); // HRManagerDashboard view will be rendered
         }
 
-        public IActionResult ManageClaims()
+        public IActionResult Manage()
         {
-            return View(); // ManageClaims view (where the HR Manager can approve/decline claims)
+            return View(); // Manag eClaims view (where the HR Manager can approve/decline claims)
         }
+        public IActionResult Payment()
+        {
+            // Replace with actual data fetching logic
+            var claims = new List<Claim>
+    {
+        new Claim
+        {
+            ClaimNumber = "C002",
+            LecturerName = "Prof. Jane",
+            Status = "Approved",
+            Modules = new List<Module>
+            {
+                new Module { ModuleName = "Math", ClaimAmount = 500 },
+                new Module { ModuleName = "Science", ClaimAmount = 700 }
+            }
+        }
+    };
+
+            return View(claims);
+        }
+
     }
 }

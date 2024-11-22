@@ -4,20 +4,68 @@
     ViewData["Title"] = "Claim";
 }
 
+<style>
+    body {
+        background-color: black;
+        color: gold;
+    }
+
+    .btn-primary {
+        background-color: gold;
+        color: black;
+    }
+
+    .btn-primary:hover {
+        background-color: #e6b800;
+    }
+
+    .btn-secondary {
+        background-color: black;
+        color: gold;
+        border: 1px solid gold;
+    }
+
+    .btn-secondary:hover {
+        background-color: #333;
+    }
+
+    .btn-danger {
+        background-color: red;
+        color: white;
+    }
+
+    .card {
+        background-color: #222;
+        border: 1px solid gold;
+    }
+
+    .card-header {
+        background-color: #333;
+        color: gold;
+        border-bottom: 1px solid gold;
+    }
+
+    .form-control {
+        background-color: #444;
+        color: gold;
+        border: 1px solid gold;
+    }
+</style>
+
 <div class="container py-5">
-    <form asp-action="Claim" method="post" enctype="multipart/form-data">
+    <form id="claimForm" enctype="multipart/form-data">
         <div class="card mb-4">
             <div class="card-header">
                 <h3>Personal Details</h3>
             </div>
             <div class="card-body">
                 <div class="form-group">
-                    <label asp-for="LecturerName"></label>
-                    <input asp-for="LecturerName" class="form-control" />
+                    <label asp-for="LecturerName">Lecturer Name</label>
+                    <input asp-for="LecturerName" id="LecturerName" class="form-control" />
                 </div>
                 <div class="form-group">
-                    <label asp-for="Department"></label>
-                    <input asp-for="Department" class="form-control" />
+                    <label asp-for="Department">Department</label>
+                    <input asp-for="Department" id="Department" class="form-control" />
                 </div>
             </div>
         </div>
@@ -31,15 +79,15 @@
                     <div class="module-entry">
                         <div class="form-group">
                             <label>Module Code</label>
-                            <input name="Modules[0].ModuleCode" class="form-control" />
+                            <input name="Modules[0].ModuleCode" class="form-control module-code" />
                         </div>
                         <div class="form-group">
                             <label>Module Name</label>
-                            <input name="Modules[0].ModuleName" class="form-control" />
+                            <input name="Modules[0].ModuleName" class="form-control module-name" />
                         </div>
                         <div class="form-group">
                             <label>Claim Type</label>
-                            <select name="Modules[0].ClaimType" class="form-control">
+                            <select name="Modules[0].ClaimType" class="form-control claim-type">
                                 <option value="">Select</option>
                                 <option value="CATCH UP">CATCH UP</option>
                                 <option value="OVERTIME">OVERTIME</option>
@@ -48,12 +96,13 @@
                         </div>
                         <div class="form-group">
                             <label>Rate Per Hour</label>
-                            <input name="Modules[0].RatePerHour" class="form-control" />
+                            <input name="Modules[0].RatePerHour" class="form-control rate-per-hour" />
                         </div>
                         <div class="form-group">
                             <label>Description</label>
-                            <textarea name="Modules[0].Description" class="form-control" rows="3"></textarea>
+                            <textarea name="Modules[0].Description" class="form-control description" rows="3"></textarea>
                         </div>
+                        <button type="button" class="btn btn-danger remove-module">Remove Module</button>
                     </div>
                 </div>
                 <button type="button" id="addModule" class="btn btn-secondary">Add Module</button>
@@ -65,22 +114,54 @@
             <input type="file" name="SupportingDocuments" class="form-control" />
         </div>
 
-        <button type="submit" class="btn btn-primary">Submit Claim</button>
+        <button type="button" id="submitClaim" class="btn btn-primary">Submit Claim</button>
     </form>
 </div>
 
 <script>
-    $(document).ready(function () {
-        var moduleTemplate = $('.module-entry').first().clone();
+    document.addEventListener('DOMContentLoaded', function () {
+        const moduleTemplate = document.querySelector('.module-entry').cloneNode(true);
+        moduleTemplate.querySelectorAll('input, select, textarea').forEach(input => input.value = '');
 
-        $('#addModule').on('click', function () {
-            var moduleCount = $('.module-entry').length;
-            var newModule = moduleTemplate.clone();
-            newModule.find('input, select').each(function () {
-                var nameAttr = $(this).attr('name').replace('[0]', `[${moduleCount}]`);
-                $(this).attr('name', nameAttr).val('');
+        document.getElementById('addModule').addEventListener('click', function () {
+            const modulesContainer = document.getElementById('modulesContainer');
+            const moduleCount = modulesContainer.children.length;
+            const newModule = moduleTemplate.cloneNode(true);
+            
+            newModule.querySelectorAll('input, select, textarea').forEach(input => {
+                input.name = input.name.replace('[0]', `[${moduleCount}]`);
+                input.value = '';
             });
-            $('#modulesContainer').append(newModule);
+
+            modulesContainer.appendChild(newModule);
+        });
+
+        document.getElementById('modulesContainer').addEventListener('click', function (e) {
+            if (e.target.classList.contains('remove-module')) {
+                e.target.closest('.module-entry').remove();
+            }
+        });
+
+        document.getElementById('submitClaim').addEventListener('click', function () {
+            // Simple validation
+            let valid = true;
+            document.querySelectorAll('.form-control').forEach(input => {
+                if (!input.value.trim()) {
+                    input.style.borderColor = 'red';
+                    valid = false;
+                } else {
+                    input.style.borderColor = 'gold';
+                }
+            });
+
+            if (!valid) {
+                alert('Please fill out all fields.');
+                return;
+            }
+
+            // Simulate form submission
+            alert('Claim submitted successfully!');
+            // Add your AJAX or form submission logic here
         });
     });
 </script>

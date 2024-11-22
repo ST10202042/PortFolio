@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<PortFolio.Models.Claim>
 
 @{
-    ViewData["Title"] = "View";
+    ViewData["Title"] = "View Claims";
 }
 
 <div class="container py-5">
@@ -23,10 +23,54 @@
                     <td>@claim.DateOfClaim.ToString("yyyy-MM-dd")</td>
                     <td>@claim.Status</td>
                     <td>
-                        <a asp-action="Details" asp-route-id="@claim.Id" class="btn btn-info">Details</a>
+                        <button class="btn btn-info details-btn" data-id="@claim.ClaimNumber">Details</button>
                     </td>
                 </tr>
             }
         </tbody>
     </table>
 </div>
+
+<div id="claimDetailsModal" class="modal" style="display:none;">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Claim Details</h2>
+        <div id="claimDetails"></div>
+    </div>
+</div>
+
+<script>
+    // Get the submitted claims data from the model and pass it to the JavaScript
+    const claimsData = @Html.Raw(Json.Serialize(Model));
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const detailsButtons = document.querySelectorAll('.details-btn');
+
+        detailsButtons.forEach(button => {
+            button.addEventListener('click', function () {
+                const claimNumber = this.getAttribute('data-id');
+                const claim = claimsData.find(c => c.ClaimNumber === claimNumber);
+
+                if (claim) {
+                    // Populate the modal with the claim details
+                    const claimDetailsDiv = document.getElementById('claimDetails');
+                    claimDetailsDiv.innerHTML = `
+                            <p><strong>Claim Number:</strong> ${claim.ClaimNumber}</p>
+                            <p><strong>Date of Claim:</strong> ${claim.DateOfClaim}</p>
+                            <p><strong>Status:</strong> ${claim.Status}</p>
+                            <p><strong>Lecturer Name:</strong> ${claim.LecturerName}</p>
+                            <p><strong>Department:</strong> ${claim.Department}</p>
+                        `;
+
+                    // Show the modal
+                    document.getElementById('claimDetailsModal').style.display = 'block';
+                }
+            });
+        });
+
+        // Close the modal
+        document.querySelector('.close').addEventListener('click', function () {
+            document.getElementById('claimDetailsModal').style.display = 'none';
+        });
+    });
+</script>

@@ -2,17 +2,62 @@
     ViewData["Title"] = "Lecturer Dashboard";
 }
 
+<style>
+    body {
+        background-color: #000; /* Black background */
+        color: #FFD700; /* Gold text */
+        font-family: Arial, sans-serif;
+    }
+
+    .container {
+        margin-top: 50px;
+        text-align: center;
+    }
+
+    h2 {
+        color: #FFD700; /* Gold text for headings */
+    }
+
+    p {
+        color: #FFD700; /* Gold text for paragraph */
+    }
+
+    ul {
+        list-style: none;
+        padding: 0;
+    }
+
+        ul li {
+            margin: 15px 0;
+        }
+
+    .btn {
+        padding: 10px 20px;
+        font-size: 16px;
+        color: #FFD700; /* Gold text for buttons */
+        background-color: #333; /* Dark background for buttons */
+        border: 2px solid #FFD700; /* Gold border */
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+        .btn:hover {
+            background-color: #444; /* Slightly lighter background on hover */
+            color: #FFA500; /* Lighter gold on hover */
+        }
+</style>
+
 <div class="container py-5">
     <h2>Welcome, Lecturer</h2>
     <p>Select an action below:</p>
     <ul>
         <li>
             <!-- Claim Button -->
-            <button class="btn btn-primary navigation-btn" data-url="/Lecturer/Claim">Claim</button>
+            <button class="btn navigation-btn" data-url="/Lecturer/Claim">Claim</button>
         </li>
         <li>
             <!-- View Button -->
-            <button class="btn btn-secondary navigation-btn" data-url="/Lecturer/View">View</button>
+            <button class="btn navigation-btn" data-url="/Lecturer/View">View</button>
         </li>
     </ul>
 </div>
