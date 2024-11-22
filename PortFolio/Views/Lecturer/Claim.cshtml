@@ -15,9 +15,9 @@
         color: black;
     }
 
-    .btn-primary:hover {
-        background-color: #e6b800;
-    }
+        .btn-primary:hover {
+            background-color: #e6b800;
+        }
 
     .btn-secondary {
         background-color: black;
@@ -25,9 +25,9 @@
         border: 1px solid gold;
     }
 
-    .btn-secondary:hover {
-        background-color: #333;
-    }
+        .btn-secondary:hover {
+            background-color: #333;
+        }
 
     .btn-danger {
         background-color: red;
@@ -49,6 +49,11 @@
         background-color: #444;
         color: gold;
         border: 1px solid gold;
+    }
+
+    /* Make the total claim amount field black font */
+    #totalClaimAmount {
+        color: black;
     }
 </style>
 
@@ -96,12 +101,13 @@
                         </div>
                         <div class="form-group">
                             <label>Rate Per Hour</label>
-                            <input name="Modules[0].RatePerHour" class="form-control rate-per-hour" />
+                            <input type="number" name="Modules[0].RatePerHour" class="form-control rate-per-hour" />
                         </div>
                         <div class="form-group">
-                            <label>Description</label>
-                            <textarea name="Modules[0].Description" class="form-control description" rows="3"></textarea>
+                            <label>Hours Worked</label>
+                            <input type="number" name="Modules[0].HoursWorked" class="form-control hours-worked" />
                         </div>
+                        <!-- Removed the total amount field for each module -->
                         <button type="button" class="btn btn-danger remove-module">Remove Module</button>
                     </div>
                 </div>
@@ -114,6 +120,12 @@
             <input type="file" name="SupportingDocuments" class="form-control" />
         </div>
 
+        <!-- Total Claim Amount displayed once at the bottom -->
+        <div class="form-group">
+            <label>Total Claim Amount</label>
+            <input type="number" id="totalClaimAmount" class="form-control" readonly />
+        </div>
+
         <button type="button" id="submitClaim" class="btn btn-primary">Submit Claim</button>
     </form>
 </div>
@@ -121,24 +133,44 @@
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         const moduleTemplate = document.querySelector('.module-entry').cloneNode(true);
-        moduleTemplate.querySelectorAll('input, select, textarea').forEach(input => input.value = '');
+        moduleTemplate.querySelectorAll('input, select').forEach(input => input.value = '');
+
+        function updateTotalAmount() {
+            let totalAmount = 0;
+            document.querySelectorAll('.module-entry').forEach(function (module) {
+                const rate = parseFloat(module.querySelector('.rate-per-hour').value) || 0;
+                const hours = parseFloat(module.querySelector('.hours-worked').value) || 0;
+                const total = rate * hours;
+                totalAmount += total;
+            });
+            document.getElementById('totalClaimAmount').value = totalAmount.toFixed(2);
+        }
 
         document.getElementById('addModule').addEventListener('click', function () {
             const modulesContainer = document.getElementById('modulesContainer');
             const moduleCount = modulesContainer.children.length;
             const newModule = moduleTemplate.cloneNode(true);
-            
-            newModule.querySelectorAll('input, select, textarea').forEach(input => {
+
+            newModule.querySelectorAll('input, select').forEach(input => {
                 input.name = input.name.replace('[0]', `[${moduleCount}]`);
                 input.value = '';
             });
 
             modulesContainer.appendChild(newModule);
+            updateTotalAmount(); // Recalculate total after adding a new module
         });
 
         document.getElementById('modulesContainer').addEventListener('click', function (e) {
             if (e.target.classList.contains('remove-module')) {
                 e.target.closest('.module-entry').remove();
+                updateTotalAmount(); // Recalculate total after removing a module
+            }
+        });
+
+        // Listen for changes to rate per hour and hours worked
+        document.getElementById('modulesContainer').addEventListener('input', function (e) {
+            if (e.target.classList.contains('rate-per-hour') || e.target.classList.contains('hours-worked')) {
+                updateTotalAmount();
             }
         });
 

@@ -15,9 +15,9 @@
         color: gold;
     }
 
-    .table th, .table td {
-        border: 1px solid gold;
-    }
+        .table th, .table td {
+            border: 1px solid gold;
+        }
 
     .btn {
         background-color: black;
@@ -29,10 +29,10 @@
         letter-spacing: 1px;
     }
 
-    .btn:hover {
-        background-color: #333;
-        color: gold;
-    }
+        .btn:hover {
+            background-color: #333;
+            color: gold;
+        }
 
     .container {
         margin-top: 50px;
@@ -46,8 +46,19 @@
         color: gold;
     }
 
-    .table td a:hover {
-        color: #e6b800;
+        .table td a:hover {
+            color: #e6b800;
+        }
+
+    /* Success Message */
+    .success-message {
+        display: none;
+        background-color: #4CAF50;
+        color: white;
+        padding: 15px;
+        margin-top: 20px;
+        text-align: center;
+        font-size: 18px;
     }
 </style>
 
@@ -68,10 +79,47 @@
                     <td>@claim.ClaimNumber</td>
                     <td>@claim.Modules.Sum(m => m.ClaimAmount)</td>
                     <td>
-                        <a asp-action="Pay" asp-route-id="@claim.Id" class="btn btn-success">Process Payment</a>
+                        <!-- Process Payment Button with JS Confirmation -->
+                        <a href="#" class="btn btn-success" onclick="confirmAction('Pay', @claim.Id)">Process Payment</a>
+
+                        <!-- Decline Button with JS Confirmation -->
+                        <a href="#" class="btn btn-danger" onclick="confirmAction('Decline', @claim.Id)">Decline</a>
                     </td>
                 </tr>
             }
         </tbody>
     </table>
+
+    <!-- Success Message -->
+    <div id="successMessage" class="success-message">
+        Action Completed Successfully!
+    </div>
 </div>
+
+<script>
+    function confirmAction(action, claimId) {
+        // Define a message based on the action
+        let message = action === 'Pay' ? 'Are you sure you want to process the payment?' : 'Are you sure you want to decline this claim?';
+
+        // Show confirmation pop-up
+        let userConfirmed = confirm(message);
+
+        if (userConfirmed) {
+            // Action confirmed: show success message
+            document.getElementById('successMessage').style.display = 'block';
+
+            // Optionally, simulate processing delay and then redirect after showing the success message
+            setTimeout(function () {
+                // After success, navigate to the appropriate action
+                if (action === 'Pay') {
+                    window.location.href = '/Manager/Pay/' + claimId;
+                } else if (action === 'Decline') {
+                    window.location.href = '/Manager/Decline/' + claimId;
+                }
+            }, 2000);  // Adjust delay as needed
+        } else {
+            // Action was canceled, no further steps taken
+            console.log(action + ' action was canceled for claim ID ' + claimId);
+        }
+    }
+</script>

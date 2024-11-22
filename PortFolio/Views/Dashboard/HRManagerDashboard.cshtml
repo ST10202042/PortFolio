@@ -14,9 +14,9 @@
         border: 1px solid gold;
     }
 
-    .btn-primary:hover {
-        background-color: #e6b800;
-    }
+        .btn-primary:hover {
+            background-color: #e6b800;
+        }
 
     .container {
         margin-top: 50px;
@@ -36,10 +36,10 @@
         letter-spacing: 1px;
     }
 
-    .btn:hover {
-        background-color: #333;
-        color: gold;
-    }
+        .btn:hover {
+            background-color: #333;
+            color: gold;
+        }
 
     ul {
         list-style-type: none;
@@ -55,13 +55,10 @@
     <p>Select an action below:</p>
     <ul>
         <li>
-            <a href="@Url.Action("Manage", "HRManager")" class="btn btn-primary">Manage Claims</a>
+            <a href="@Url.Action("Manage", "Manager")" class="btn btn-primary">Manage Claims</a>
         </li>
         <li>
-            <button class="btn navigation-btn" onclick="location.href='/HRManager/Payment'">Process Payments</button>
-
+            <a href="@Url.Action("Payment", "HRManager")" class="btn btn-primary">Process Payments</a>
         </li>
-     
-       
     </ul>
 </div>
